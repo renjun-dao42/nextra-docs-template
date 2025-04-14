@@ -1,0 +1,126 @@
+# Changelog
+
+This page contains an automatically generated log of project changes, providing insights into the development history.
+
+import { useState, useEffect } from 'react';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execPromise = promisify(exec);
+
+export function GitChangelog() {
+  const [commits, setCommits] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchGitLog() {
+      try {
+        // Format: hash, author name, date, commit message
+        const { stdout } = await execPromise(
+          'git log --pretty=format:"%h|%an|%ad|%s" --date=short -n 20'
+        );
+        
+        const logEntries = stdout
+          .split('\n')
+          .filter(line => line.trim() !== '')
+          .map(line => {
+            const [hash, author, date, ...messageParts] = line.split('|');
+            const message = messageParts.join('|'); // In case commit message contains the delimiter
+            return { hash, author, date, message };
+          });
+          
+        setCommits(logEntries);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching git log:', err);
+        setError('Failed to load git history. This could be because the component is running in a build environment without git access.');
+        setLoading(false);
+      }
+    }
+
+    fetchGitLog();
+  }, []);
+
+  if (loading) {
+    return <div>Loading commit history...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="error-message">
+        <p>{error}</p>
+        <p>You may need to view this page in development mode with git repository access.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="git-changelog">
+      <h2>Recent Changes</h2>
+      {commits.length === 0 ? (
+        <p>No commit history found.</p>
+      ) : (
+        <ul className="commit-list">
+          {commits.map((commit) => (
+            <li key={commit.hash} className="commit-item">
+              <div className="commit-header">
+                <span className="commit-hash">{commit.hash}</span>
+                <span className="commit-date">{commit.date}</span>
+              </div>
+              <div className="commit-message">{commit.message}</div>
+              <div className="commit-author">by {commit.author}</div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+<style jsx>{`
+  .git-changelog {
+    margin: 2rem 0;
+  }
+  .commit-list {
+    list-style: none;
+    padding: 0;
+  }
+  .commit-item {
+    padding: 1rem;
+    border: 1px solid #eaeaea;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+  }
+  .commit-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .commit-hash {
+    font-family: monospace;
+    color: #666;
+  }
+  .commit-date {
+    color: #666;
+  }
+  .commit-message {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  .commit-author {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  .error-message {
+    padding: 1rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+  }
+`}</style>
+
+<GitChangelog />
+
+export default ({ children }) => <div>{children}</div>;

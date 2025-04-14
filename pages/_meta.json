@@ -2,6 +2,10 @@
   "index": "Introduction",
   "another": "Another Page",
   "advanced": "Advanced (A Folder)",
+  "changelog": {
+    "title": "Changelog",
+    "type": "page"
+  },
   "about": {
     "title": "About",
     "type": "page"
