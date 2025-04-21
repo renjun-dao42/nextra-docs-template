@@ -1,0 +1,264 @@
+.changelog-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.changelog-header {
+  margin-bottom: 24px;
+}
+
+.changelog-header h1 {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.changelog-header p {
+  color: #666;
+  font-size: 1rem;
+}
+
+.changelog-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.changelog-item {
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-left-color 0.2s ease;
+  cursor: pointer;
+  background-color: #ffffff;
+}
+
+.changelog-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.changelog-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.changelog-tag {
+  border-radius: 16px;
+  padding: 2px 12px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: capitalize;
+  display: inline-block;
+}
+
+.changelog-date {
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.changelog-message {
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.changelog-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #666666;
+  font-size: 0.85rem;
+}
+
+.changelog-author {
+  font-weight: 500;
+}
+
+.changelog-hash {
+  font-family: monospace;
+  background-color: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Tag colors for different commit types */
+.tag-feature {
+  background-color: #e6f7ff;
+  color: #0070f3;
+  border: 1px solid #0070f3;
+}
+
+.tag-fix {
+  background-color: #fff2e8;
+  color: #d46b08;
+  border: 1px solid #ffbb96;
+}
+
+.tag-docs {
+  background-color: #f6ffed;
+  color: #389e0d;
+  border: 1px solid #b7eb8f;
+}
+
+.tag-chore {
+  background-color: #f9f0ff;
+  color: #722ed1;
+  border: 1px solid #d3adf7;
+}
+
+.tag-refactor {
+  background-color: #e6fffb;
+  color: #08979c;
+  border: 1px solid #87e8de;
+}
+
+.tag-test {
+  background-color: #fcffe6;
+  color: #7cb305;
+  border: 1px solid #eaff8f;
+}
+
+.tag-style {
+  background-color: #fff0f6;
+  color: #eb2f96;
+  border: 1px solid #ffadd2;
+}
+
+.tag-other {
+  background-color: #f0f0f0;
+  color: #666666;
+  border: 1px solid #d9d9d9;
+}
+
+/* Border left colors for commit items */
+.item-feature {
+  border-left: 3px solid #0070f3;
+}
+
+.item-fix {
+  border-left: 3px solid #d46b08;
+}
+
+.item-docs {
+  border-left: 3px solid #389e0d;
+}
+
+.item-chore {
+  border-left: 3px solid #722ed1;
+}
+
+.item-refactor {
+  border-left: 3px solid #08979c;
+}
+
+.item-test {
+  border-left: 3px solid #7cb305;
+}
+
+.item-style {
+  border-left: 3px solid #eb2f96;
+}
+
+.item-other {
+  border-left: 3px solid #666666;
+}
+
+/* Loading state */
+.loading-container {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 112, 243, 0.1);
+  border-radius: 50%;
+  border-top-color: #0070f3;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error state */
+.error-container {
+  text-align: center;
+  padding: 40px 0;
+  color: #cf1322;
+  background-color: #fff1f0;
+  border: 1px solid #ffa39e;
+  border-radius: 4px;
+}
+
+/* Animation for items */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 0;
+  color: #666;
+  background-color: #f9f9f9;
+  border: 1px dashed #d9d9d9;
+  border-radius: 4px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .changelog-item {
+    padding: 12px;
+  }
+  
+  .changelog-message {
+    font-size: 1rem;
+  }
+  
+  .changelog-item-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .changelog-date {
+    align-self: flex-start;
+  }
+  
+  .changelog-tag {
+    padding: 2px 8px;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .changelog-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .changelog-hash {
+    align-self: flex-start;
+  }
+}
